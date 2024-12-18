@@ -1,7 +1,7 @@
 import random
 import time
 
-ARR_LENGTH = 10**3
+ARR_LENGTH = 10**4
 
 def bubble_sort(arr):
   for i in range(len(arr)):
@@ -18,13 +18,52 @@ def insertion_sort(arr):
       arr[j], arr[j-1] = arr[j-1], arr[j]
       j -= 1
 
+def quick_sort(arr):
+  def partition(arr, lo, hi):
+    pivot = arr[hi]
+    i = lo
+    for j in range(lo, hi):
+      if arr[j] <= pivot:
+        arr[i], arr[j] = arr[j], arr[i]
+        i += 1
+
+    arr[i], arr[hi] = arr[hi], arr[i]
+    return i
+
+  def quicksort_driver(arr, lo, hi):
+    if lo >= hi or lo < 0:
+      return
+
+    p = partition(arr, lo, hi)
+    quicksort_driver(arr, lo, p-1)
+    quicksort_driver(arr, p+1, hi)
+
+  quicksort_driver(arr, 0, len(arr)-1)
+
+def verify_sort(arr):
+  if len(arr) < 2:
+    return True
+
+  prev = arr[0]
+  for val in arr:
+    if val < prev:
+      return False
+
+  return True
+
 def run_sort(sort_name, f, arr):
   print(f"Running {sort_name}")
   start = time.time()
   f(arr)
   end = time.time()
+  if not verify_sort(arr):
+    print(f"{sort_name} failed to properly sort list")
   total_time = (end - start) * 10**3
-  print(f"  Completed in {total_time:.3f} milliseconds")
+  if total_time < 10**3:
+    print(f"  Completed in {total_time:.3f} milliseconds")
+  else:
+    total_time /= 10**3
+    print(f"  Completed in {total_time:.3f} seconds")
 
 def main():
   print(f"Running sorts on a randomized array of length {ARR_LENGTH}")
@@ -32,6 +71,7 @@ def main():
   sorts = [
     ["Bubble Sort", bubble_sort],
     ["Insertion Sort", insertion_sort],
+    ["Quick Sort", quick_sort],
   ]
 
   for sort in sorts:
