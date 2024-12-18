@@ -11,6 +11,17 @@ def bubble_sort(arr):
         arr[j] = arr[i]
         arr[i] = temp
 
+def selection_sort(arr):
+  if len(arr) < 2:
+    return
+
+  for i in range(len(arr)):
+    min_ind = i
+    for j in range(i+1, len(arr)):
+      if arr[j] < arr[min_ind]:
+        min_ind = j
+      arr[i], arr[min_ind] = arr[min_ind], arr[i]
+
 def insertion_sort(arr):
   for i in range(1, len(arr)):
     j = i
@@ -70,6 +81,7 @@ def main():
   arr = [random.random() for _ in range(ARR_LENGTH)]
   sorts = [
     ["Bubble Sort", bubble_sort],
+    ["Selection Sort", selection_sort],
     ["Insertion Sort", insertion_sort],
     ["Quick Sort", quick_sort],
   ]
