@@ -30,12 +30,6 @@ def insertion_sort(arr):
       arr[j], arr[j-1] = arr[j-1], arr[j]
       j -= 1
 
-def heap_sort(arr):
-  pq = priority_queue()
-  pq.init(arr)
-  for i in range(len(arr)):
-    arr[i] = pq.pop_min()
-
 def merge_sort(arr):
   def merge(arr1, arr2):
     out = []
@@ -60,6 +54,13 @@ def merge_sort(arr):
   arr.clear()
   arr.extend(res)
   return arr
+
+def heap_sort(arr):
+  pq = priority_queue()
+  for val in arr:
+    pq.insert(val)
+  for i in range(len(arr)):
+    arr[i] = pq.pop_min()
 
 def quick_sort(arr):
   def partition(arr, lo, hi):
@@ -115,8 +116,8 @@ def main():
     ["Bubble Sort", bubble_sort],
     ["Selection Sort", selection_sort],
     ["Insertion Sort", insertion_sort],
-    ["Heap Sort", heap_sort],
     ["Merge Sort", merge_sort],
+    ["Heap Sort", heap_sort],
     ["Quick Sort", quick_sort],
   ]
 

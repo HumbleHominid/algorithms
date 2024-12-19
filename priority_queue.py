@@ -1,30 +1,18 @@
-import random
-
 # Given index n return the parent index
 def parent(n:int) -> int:
-  if n == 1:
-    return -1
+  if n == 0: return -1
   return (n-1)//2
 
 def young_child(n:int) -> int:
-  return n*2+1
+  return 2*n+1
 
 class priority_queue[T]:
   arr: list[T] = []
-  size: int = 0
-
-  def init(self, l:list[T] = []):
-    self.arr = list[T](l)
-    self.size = len(l)
-
-    for i in range(len(self.arr)):
-      self.bubble_down(self.size-1)
 
   def insert(self, val:T):
-    size += 1
     # Will potentially cause a realloc
-    self.arr.insert(size, val)
-    self.bubble_up(size)
+    self.arr.append(val)
+    self.bubble_up(len(self.arr)-1)
 
   def bubble_up(self, n:int):
     # we are at the head node
@@ -48,9 +36,10 @@ class priority_queue[T]:
   
   def pop_min(self) -> T:
     min = self.arr[0]
-    self.arr[0] = self.arr[-1]
-    self.size -= 1
-    self.bubble_down(0)
+    try:
+      self.arr[0] = self.arr.pop()
+      self.bubble_down(0)
+    except: pass
     return min
 
   def print(self):
