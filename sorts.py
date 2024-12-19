@@ -2,7 +2,7 @@ import random
 import time
 from priority_queue import priority_queue
 
-ARR_LENGTH = 10**3
+ARR_LENGTH = 10**4
 
 def bubble_sort(arr):
   for i in range(len(arr)):
@@ -35,6 +35,31 @@ def heap_sort(arr):
   pq.init(arr)
   for i in range(len(arr)):
     arr[i] = pq.pop_min()
+
+def merge_sort(arr):
+  def merge(arr1, arr2):
+    out = []
+
+    while arr1 and arr2:
+      if arr1[0] < arr2[0]:
+        out.append(arr1.pop(0))
+      else:
+        out.append(arr2.pop(0))
+    if arr1:
+      out.extend(arr1)
+    elif arr2:
+      out.extend(arr2)
+    
+    return out
+
+  if len(arr) <= 1:
+    return arr
+
+  # This takes slices so it's both slower and more costly than doing in-place
+  res = merge(merge_sort(arr[0:len(arr)//2]), merge_sort(arr[len(arr)//2:]))
+  arr.clear()
+  arr.extend(res)
+  return arr
 
 def quick_sort(arr):
   def partition(arr, lo, hi):
@@ -91,6 +116,7 @@ def main():
     ["Selection Sort", selection_sort],
     ["Insertion Sort", insertion_sort],
     ["Heap Sort", heap_sort],
+    ["Merge Sort", merge_sort],
     ["Quick Sort", quick_sort],
   ]
 
