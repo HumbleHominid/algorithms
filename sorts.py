@@ -1,7 +1,8 @@
 import random
 import time
+from priority_queue import priority_queue
 
-ARR_LENGTH = 10**4
+ARR_LENGTH = 10**3
 
 def bubble_sort(arr):
   for i in range(len(arr)):
@@ -28,6 +29,12 @@ def insertion_sort(arr):
     while j > 0 and (arr[j] < arr[j-1]):
       arr[j], arr[j-1] = arr[j-1], arr[j]
       j -= 1
+
+def heap_sort(arr):
+  pq = priority_queue()
+  pq.init(arr)
+  for i in range(len(arr)):
+    arr[i] = pq.pop_min()
 
 def quick_sort(arr):
   def partition(arr, lo, hi):
@@ -68,7 +75,7 @@ def run_sort(sort_name, f, arr):
   f(arr)
   end = time.time()
   if not verify_sort(arr):
-    print(f"{sort_name} failed to properly sort list")
+    print(f"  {sort_name} failed to properly sort list")
   total_time = (end - start) * 10**3
   if total_time < 10**3:
     print(f"  Completed in {total_time:.3f} milliseconds")
@@ -83,6 +90,7 @@ def main():
     ["Bubble Sort", bubble_sort],
     ["Selection Sort", selection_sort],
     ["Insertion Sort", insertion_sort],
+    ["Heap Sort", heap_sort],
     ["Quick Sort", quick_sort],
   ]
 
